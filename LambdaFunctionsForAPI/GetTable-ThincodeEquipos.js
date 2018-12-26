@@ -14,6 +14,10 @@ ddb.scan(params, function(err, data) {
         var sortData = sortTable(data.Items);
         const response = {
             statusCode: 200,
+			headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+            },
             body: JSON.stringify(sortData),
         };
         callback(null, response);
