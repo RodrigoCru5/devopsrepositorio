@@ -3,15 +3,18 @@ const AWS = require('aws-sdk');
 const ddb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => {
+    //parse Json body request
     const bodyRequest = JSON.parse(event.body);
     
     if(bodyRequest.action === 'reset')
     {
+        //if the action is correct call this functions
         resetTeamsTable(callback);
         resetPlayersTable(callback);
     }
     else
     {
+        //if there is an error, notify to client like an error response
         callback(null, {
                 statusCode: 500,
                 body: JSON.stringify({
@@ -23,7 +26,7 @@ exports.handler = (event, context, callback) => {
             },
         });
     }
-    
+    //if all be good, notify to client with a succeed response
     const response = {
         statusCode: 200,
         body: JSON.stringify({
@@ -39,6 +42,7 @@ function resetTeamsTable(callback)
     var table = "ThincodeEquipos";
     var ids;
     var paramsUpdt;
+    //set params with default values for each id in table
     for(var id = 1; id <= 18; id++)
     {
         ids = id.toString();
@@ -59,6 +63,7 @@ function resetTeamsTable(callback)
             },
             ReturnValues:"UPDATED_NEW"
         };
+        //call function for item will be update
         updtRecord(paramsUpdt, ids, table);
     }
 }
@@ -68,6 +73,7 @@ function resetPlayersTable(callback)
     var table = "ThincodeJugadores";
     var ids;
     var paramsUpdt;
+    //set params with default values for each id in table
     for(var id = 1; id <= 90; id++)
     {
         ids = id.toString();
@@ -82,15 +88,19 @@ function resetPlayersTable(callback)
             },
             ReturnValues:"UPDATED_NEW"
         };
+        //call function for item will be update
         updtRecord(paramsUpdt, ids, table);
     }
 }
 
 function updtRecord(paramsUpdt, ids, table) {
+   //call function update from AWS DynamoDB and pass the params will be update
    ddb.update(paramsUpdt, function(err, data2) {
         if (err) {
+            //if there is an error, send the error to javascript console and send like a response
             console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
         } else {
+            //if there is not an error, send to javascript console and notify to client with a succeed menssage
             console.log("Update item ID: ", ids, "succeeded in table: ", table);
         }
     });
