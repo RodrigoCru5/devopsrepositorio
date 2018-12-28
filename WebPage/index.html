@@ -1,12 +1,211 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+      <title>www.thincode-devops.com</title>
+	  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="css/estilos.css">
+      
+  </head>
+<body> 
+  <div id="img-logo" class="logo">
+      <img src="img/logo.jpg"/>
+  </div>
+  
+  <section id="parte1">
+  <div class="cont-btnjugar">
+    <button id="btn-jugar" type="button" onclick="jugar(); startTournament()" class="botones btn btn-primary btn-lg active">Jugar</button>
+  </div>
+  
+  <div class="bienvenido">
+    <h1>Bienvenido!</h1>
+    <h2>Que la simulacion comience</h2>
+  </div>
+  </section>
 
-	<head>
-		<script type="text/javascript" src="tournament.js"></script>
-	</head>
-
-	<body>
-		<button type="button" onclick="startTournament()">Simular</button>
-		<p id="resultado"></p>
-	</body>
-	
+  <section id="parte2" style="display: none">
+  <div id="img-cargando" class="loading">
+      <img src="img/cargando.gif" width="200" height="200"/>
+      <h1>Cargando</h1>
+  </div>
+  </section>
+  
+  <section id="parte3" style="display: none">
+  <!-- Boton Jugar --> 
+  <div class="cont-btnliguilla">
+    <button id="btn-liguilla" type="button" onclick="liguilla(); startLiguilla()" class="botones btn btn-primary btn-lg active">Liguilla!</button> 
+  </div>
+<!-- Tabla1 -->  
+  <div class="tab"> <!-- CONTENEDOR DE LAS DOS TABLAS -->
+    <div class="tablas">
+      <table id="tab-gral" class= "table-bordered table-striped table-dark">
+        <th id="tab-enc" class="encabezado .thead-light">Tabla General</th>
+        <tr id="tab-enc2">
+            <th>Pos. </th>
+            <th>Equipo </th>
+            <th>JJ </th>
+            <th>Pts </th>
+            <th>G </th>
+            <th>E </th>
+            <th>P </th>
+            <th>GF </th>
+            <th>GC </th>
+            <th>DG </th>
+        </tr>          
+      </table>
+    </div>
+<!-- Tabla2 -->
+    <div class="tablas">
+      <table id="tab-goleo" class= "table-striped table-dark">
+        <th>Goleo Individual</th>
+        <tr>
+          <th>Jugador</th>
+          <th>Equipo</th>
+          <th>Goles</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+  </section>
+  
+   <section id="parte4" style="display: none">
+   
+   <div class="cont-btnsiguiente">
+    <button id="btn-siguiente" type="button" onclick="siguiente(); ligNext()" class="botones btn btn-primary btn-lg active">Siguiente</button>
+   </div>
+  <div class="float-sm-left">
+  <div id="auto" class="cont-diagrama">  <!-- CONTENEDOR DEL DIAGRAMA
+    <!--Inicio de diagrama -->    
+    <div class="bracket">
+    <!-- Inician los cuartos de final -->
+      <section id="dg-cuart" class="round quarterfinals">
+        <div class="winners">
+          <div class="matchups">
+            <div class="matchup">
+              <div class="participants">
+                <div class="participant winner"><span id="dg-cuart1"></span></div> <!--id="auto" style="display: none" CON ESTO OCULTAMOS EL TEXTO Y DEJAMOS EL CUADRO VACIO(DENTRO DE SPAN)  -->
+                <div class="participant"><span id="dg-cuart2"></span></div>
+              </div>
+            </div>
+            <div class="matchup">
+              <div class="participants">
+                <div class="participant"><span id="dg-cuart3"></span></div>
+                <div class="participant winner"><span id="dg-cuart4"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="connector">
+            <div class="merger"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+        <div class="winners">
+          <div class="matchups">
+            <div class="matchup">
+              <div class="participants">
+                <div class="participant"><span id="dg-cuart5"></span></div>
+                <div class="participant winner"><span id="dg-cuart6"></span></div>
+              </div>
+            </div>
+            <div class="matchup">
+              <div class="participants">
+                <div class="participant"><span id="dg-cuart7"></span></div>
+                <div class="participant winner"><span id="dg-cuart8"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="connector">
+            <div class="merger"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </section>
+      <!-- HASTA AQUI SE MOSTRARA LA PRIMERA VEZ Y LOS CUADROS DE ABAJO ESTARAN VACIOS HASTA QUE DEN CLIC EN EL BOTON -->
+      
+      <!-- inicia la semifinal -->
+      <section id="semifinal" class="round semifinals"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
+        <div class="winners">
+          <div class="matchups"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
+            <div class="matchup">
+              <div class="participants"> <!-- "participant winner"=COLOCA UNA BARRITA DE COLOR DEL LADO IZQ Si colocamos desde aqui desaparece los dos cuadros -->
+                <div class="participant winner"><span id="dg-semi1" style="display:none"></span></div> <!-- Se mantendra oculto hasta dar clic(SPAN) -->
+                <div class="participant"><span id ="dg-semi2" style="display: none"></span></div>        <!-- Se mantendra oculto hasta dar clic -->
+              </div>
+            </div>
+            <div class="matchup">
+              <div class="participants">
+                <div class="participant winner"><span id="dg-semi3" style="display:none"></span></div> <!-- Se mantendra oculto hasta dar clic -->
+                <div class="participant"><span id="dg-semi4" style="display:none"></span></div>       <!-- Se mantendra oculto hasta dar clic -->
+              </div>
+            </div>
+          </div>
+          <div class="connector">
+            <div class="merger"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </section>
+      <!-- Hasta aqui se mostrara el diagrama -->
+      
+      <!-- Esta parte se mantendra oculta hasta que den clic en el boton-->
+      <!-- Inicia la final-->
+      <section id="dg-final" class="round finals"> <!-- style="display: none" DESDE AQUI OCULTAREMOS PARA LA FINAL-->
+        <div class="winners">
+          <div class="matchups">
+            <div class="matchup">
+              <div class="participants">
+                <div class="participant winner"><span id="dg-final1" style="display:none"></span></div>  
+                <div class="participant"><span id="dg-final2" style="display:none"></span></div>        
+              </div>
+            </div>
+          </div>
+          <div class="connector"> <!--AGREGAMOS LINEAS DE CONEXIONES PARA EL RECUADRO QUE MOSTRARA AL CAMPEON--> 
+            <div class="merger"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </section>
+      
+     <!--PARTE DONDE SE AGREGO EL CUADRO DE CAMPEON -->
+     <section id="champion" class="round champion"> <!-- id="auto" style="display: none" DESDE AQUI OCULTAREMOS EL CUADRO DEL CAMPEON-->
+       <div class="winners">
+         <div class="matchups">
+           <div class="matchup">
+             <div class="participants">
+               <div class="participant winner"><span id="dg-campeon" style="display:none"></span></div>          
+             </div>
+           </div>
+         </div>
+         <!-- Img Copa -->
+         <div id="img-copa" class="copa">
+         <img src="img/logocopa.png" width="200" height="200"/>
+         </div>
+       </div>
+      </section>
+    </div>  
+  </div>
+  </div>
+  </section>
+ 
+ 
+  <section id="parte5" style="display: none">
+    <div class="cont-btninicio">
+    <button id="btn-reset" type="button" onclick="inicio(); reset();" class="botones btn btn-primary btn-lg active">Reset</button>
+    </div>
+    <div id="img-festejo" class="logo">
+        <img src="img/festejo2.gif" alt="Funny image"/>
+        <img src="img/logocopa.png" width="100" height="100"/>
+        <h1 class="text-center"> Felicidades!</h1>
+        <h2 id= "h2"class="text-center"></h2>
+        <img src="img/festejo.gif" alt="Funny image"/>
+    </div>
+  </section>
+  
+ 
+  <script src="js/sjquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/tournament.js"></script>
+  <script src="js/instrucciones.js"></script>
+</body>
 </html>
