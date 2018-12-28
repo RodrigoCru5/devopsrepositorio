@@ -107,8 +107,10 @@ for (index1 = 0; index1 < statisticTable.length; index1++) {
 
 //Array de goles
 var golesJug = new Array(90);
-for(index1 = 0; index1<90;index1++){
-    golesJug[index1]=0;
+function initializeGoalsArray() {
+	for(index1 = 0; index1<90;index1++){
+		golesJug[index1]=0;
+	}
 }
 
 //Matriz de goleo
@@ -270,9 +272,9 @@ function addCamp(){
 
 //*****RUN SIMULATION OF MATCHES*****
 function startTournament(){
-
-    inicEstEquip();
-    
+	document.getElementById("btn-liguilla").disabled = true; 
+    inicEstEquip(); 
+	initializeGoalsArray();
 	for(index1 = 0; index1 < 18; index1 ++)
 	{
         mpoints[index1]=new Array(18);
@@ -314,18 +316,21 @@ function startTournament(){
     tablaGoleo();
     getTeamData(); 
 	getPlayerData();
+	document.getElementById("btn-liguilla").disabled = false; 
 }
 
 
 function tablaGoleo(){
     var n;
+	var goles = 0;
     var vgoles=0;
         for(index=0;index<90;index ++){
             scontjugoles += ("<br>Jugador - "+playersArray[index]+" " + teamsArray[Math.floor(index/5)] + " " + golesJug[index]+" goles" );
             goleoCompleto[index][0] = playersArray[index];
             goleoCompleto[index][1] = golesJug[index];
             goleoCompleto[index][2] = teamsArray[Math.floor(index/5)];
-			savePlayerData();
+			goles = golesJug[index];
+			savePlayerData(index, goles);
         } 
 }
 
@@ -358,15 +363,11 @@ var resultTeamB = teamBGoals.reduce(matchResult, 0);
 
 //*****RESET FUNCTION*****	
 function reset(){
+	document.getElementById("btn-jugar").disabled = true; 
     x=0;
 	var tableIndex;
-    stringDisplay="";
     scontAmG3="";
     scontjugoles="";
-    stringDispLig="";
-    stringDispLigNext1="";
-    stringDispLigNext2="";
-    stringDispLigNext3="";
 	teamsArray8 = [0, 0, 0, 0, 0, 0, 0, 0];
 	for(tableIndex = 19; tableIndex > 1; tableIndex --){
 		document.getElementById("tab-gral").deleteRow(tableIndex);
@@ -376,108 +377,108 @@ function reset(){
 		document.getElementById("tab-goleo").deleteRow(tableIndex);
 	}
 	resetDatabase();
+	document.getElementById("btn-jugar").disabled = false; 
 }
 
 //*****Saving one team data to DB*****
 function saveTableData(){
 	//API Url
-	var Url = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/team";
+	var UrlTeamPost = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/team";
 	//Http Request
-	var xhr = new XMLHttpRequest();
+	var xhrTeamPost = new XMLHttpRequest();
 	//Object for make json
-	var obj = new Object();
-	obj.teamId = index1 + 1;
-	obj.gf = aEstksEquip[index1][6];
-	obj.gc = aEstksEquip[index1][7];		
-	obj.win = aEstksEquip[index1][3];
-	obj.lose = aEstksEquip[index1][5];
-	obj.tie = aEstksEquip[index1][4];
-	obj.points = aEstksEquip[index1][2];
-	xhr.open('POST', Url, true);
-	xhr.send(JSON.stringify(obj));
+	var objTeamPost = new Object();
+	objTeamPost.teamId = index1 + 1;
+	objTeamPost.gf = aEstksEquip[index1][6];
+	objTeamPost.gc = aEstksEquip[index1][7];		
+	objTeamPost.win = aEstksEquip[index1][3];
+	objTeamPost.lose = aEstksEquip[index1][5];
+	objTeamPost.tie = aEstksEquip[index1][4];
+	objTeamPost.points = aEstksEquip[index1][2];
+	xhrTeamPost.open('POST', UrlTeamPost, true);
+	xhrTeamPost.send(JSON.stringify(objTeamPost));
 }
 
 //*****Saving goals score to DB*****
-function savePlayerData(){
+function savePlayerData(idJugador, cantGoles){
 	//API Url
-	var Url = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/player";
+	var UrlPlayerPost = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/player";
 	//Http Request
-	var xhr = new XMLHttpRequest();
+	var xhrPlayerPost = new XMLHttpRequest();
 	//Object for make json
-	var obj = new Object();
-	obj.idJugador = index + 1;
-	obj.goles = golesJug[index];	
-	xhr.open('POST', Url, true);
-	xhr.send(JSON.stringify(obj));
+	var objPlayerPost = new Object();
+	objPlayerPost.idJugador = idJugador + 1;
+	objPlayerPost.goles = cantGoles;	
+	xhrPlayerPost.open('POST', UrlPlayerPost, true);
+	xhrPlayerPost.send(JSON.stringify(objPlayerPost));
 }
 
 //*****Get teams data from DB*****
 function getTeamData(){
 	//API Url
-	var Url = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/team";
+	var UrlTeamReq = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/team";
 	//Http Request
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange=function(){
-		if (xhr.readyState==4 && xhr.status==200){
-			response = JSON.parse(xhr.responseText);
-			appendTeamJson(response);// pass the json object to the append_json function
+	var xhrTeamReq = new XMLHttpRequest();
+	xhrTeamReq.onreadystatechange=function(){
+		if (xhrTeamReq.readyState==4 && xhrTeamReq.status==200){
+			responseTeamReq = JSON.parse(xhrTeamReq.responseText);
+			appendTeamJson(responseTeamReq);// pass the json object to the append_json function
 		}
 	}	
-	xhr.open('GET', Url, true);
-	xhr.send();
+	xhrTeamReq.open('GET', UrlTeamReq, true);
+	xhrTeamReq.send();
 	
 }
 
 //this function appends the general table data to the html table 
-function appendTeamJson(data){
+function appendTeamJson(teamData){
 	var table = document.getElementById('tab-gral');
 	var counter = 0;
 	for (counter = 0; counter < 18; counter ++){
 		var tr = document.createElement('tr');
 		tr.setAttribute("id", counter);
 		tr.innerHTML = '<td>' + (counter + 1) + '</td>' +
-		'<td>' + data[counter].Nombre_equipo + '</td>' +
+		'<td>' + teamData[counter].Nombre_equipo + '</td>' +
 		'<td>17</td>' +
-		'<td>' + data[counter].POINTS + '</td>' +
-		'<td>' + data[counter].WIN + '</td>' +
-		'<td>' + data[counter].TIE + '</td>' +
-		'<td>' + data[counter].LOSE + '</td>' +
-		'<td>' + data[counter].GF + '</td>' +
-		'<td>' + data[counter].GC + '</td>' +
-		'<td>' + data[counter].DIF + '</td>';
+		'<td>' + teamData[counter].POINTS + '</td>' +
+		'<td>' + teamData[counter].WIN + '</td>' +
+		'<td>' + teamData[counter].TIE + '</td>' +
+		'<td>' + teamData[counter].LOSE + '</td>' +
+		'<td>' + teamData[counter].GF + '</td>' +
+		'<td>' + teamData[counter].GC + '</td>' +
+		'<td>' + teamData[counter].DIF + '</td>';
 		table.appendChild(tr);
 		if (counter < 8){
-			teamsArray8[counter] = data[counter].Nombre_equipo;
+			teamsArray8[counter] = teamData[counter].Nombre_equipo;
 		}
 	}
 }
 
 function getPlayerData(){
 	//API Url
-	var Url = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/player";
+	var UrlPlayerReq = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/player";
 	//Http Request
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange=function(){
-		if (xhr.readyState==4 && xhr.status==200){
-			console.log(xhr.response);
-			response = JSON.parse(xhr.responseText);
-			appendPlayerJson(response);// pass the json object to the append_json function
+	var xhrPlayerReq = new XMLHttpRequest();
+	xhrPlayerReq.onreadystatechange=function(){
+		if (xhrPlayerReq.readyState==4 && xhrPlayerReq.status==200){
+			responsePlayerReq = JSON.parse(xhrPlayerReq.responseText);
+			appendPlayerJson(responsePlayerReq);// pass the json object to the append_json function
 		}
 	}	
-	xhr.open('GET', Url, true);
-	xhr.send();
+	xhrPlayerReq.open('GET', UrlPlayerReq, true);
+	xhrPlayerReq.send();
 }
 
 //this function appends the goals by player table json data to the html table 
-function appendPlayerJson(data){
+function appendPlayerJson(playerData){
 	var table = document.getElementById('tab-goleo');
 	var counter = 0;
 	for (counter = 0; counter < 5; counter ++){
 		var tr = document.createElement('tr');
 		tr.setAttribute("id", counter);
-		tr.innerHTML = '<td>' + data[counter].Nombre + '</td>' +
-		'<td>' + data[counter].Equipo + '</td>' +
-		'<td>' + data[counter].Goles + '</td>';
+		tr.innerHTML = '<td>' + playerData[counter].Nombre + '</td>' +
+		'<td>' + playerData[counter].Equipo + '</td>' +
+		'<td>' + playerData[counter].Goles + '</td>';
 		table.appendChild(tr);
 	}
 }
@@ -485,12 +486,12 @@ function appendPlayerJson(data){
 //*****Reset DB*****
 function resetDatabase(){
 	//API Url
-	var Url = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/reset";
+	var UrlReset = "https://4d6q7b1e85.execute-api.us-east-2.amazonaws.com/prod/reset";
 	//Http Request
-	var xhr = new XMLHttpRequest();
+	var xhrReset = new XMLHttpRequest();
 	//Object for make json
-	var obj = new Object();
-	obj.action = "reset";
-	xhr.open('POST', Url, true);
-	xhr.send(JSON.stringify(obj));
+	var objReset = new Object();
+	objReset.action = "reset";
+	xhrReset.open('POST', UrlReset, true);
+	xhrReset.send(JSON.stringify(objReset));
 }
