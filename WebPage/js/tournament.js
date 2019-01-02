@@ -432,7 +432,7 @@ function getTeamData(){
 
 //this function appends the general table data to the html table 
 function appendTeamJson(teamData){
-	var table = document.getElementById('tab-gral');
+	var table = document.getElementById('tbody-gral');
 	var counter = 0;
 	for (counter = 0; counter < 18; counter ++){
 		var tr = document.createElement('tr');
@@ -471,7 +471,7 @@ function getPlayerData(){
 
 //this function appends the goals by player table json data to the html table 
 function appendPlayerJson(playerData){
-	var table = document.getElementById('tab-goleo');
+	var table = document.getElementById('tbody-goleo');
 	var counter = 0;
 	for (counter = 0; counter < 5; counter ++){
 		var tr = document.createElement('tr');

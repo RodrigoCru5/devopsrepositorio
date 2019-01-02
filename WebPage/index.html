@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
       <title>www.thincode-devops.com</title>
 	  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="css/estilos.css">
       
   </head>
+<header>
+	<!-- ________________________________________________Header de la pagina web_____________________________________________________ -->
+	<p> </p>
+</header>
 <body> 
+
+	<!-- ________________________________________________Body de la pagina web_______________________________________________________ -->
+			<!-- ____________________________________________Primer pantalla_____________________________________________ -->
   <header>
   <p></p>
   </header>
   <div id="img-logo" class="logo">
-      <img src="img/logo.jpg"/>
+      <img src="img/logo.png" class="img-fluid">
   </div>
   
   <section id="parte1">
@@ -21,178 +28,191 @@
     <button id="btn-jugar" type="button" onclick="jugar(); startTournament()" class="botones btn btn-primary btn-lg active">Jugar</button>
   </div>
   
-  <div class="bienvenido">
-    <h1>Bienvenido!</h1>
-    <h2>Que la simulacion comience</h2>
+  <div class="card text-center bienvenido">
+	<div class="card-body">
+		<h1 class="card-title">¡Bienvenido!</h1>
+		<h2 class="card-text">Que la simulación comience</h2>
+	<div>
   </div>
   </section>
 
+  
+  
+			<!-- ____________________________________________Segunda pantalla_____________________________________________ -->
   <section id="parte2" style="display: none">
   <div id="img-cargando" class="loading">
       <img src="img/cargando.gif" width="200" height="200"/>
-      <h1>Cargando</h1>
+      <h1>Cargando...</h1>
   </div>
   </section>
   
+	
+
+			<!-- ____________________________________________Tercer pantalla_____________________________________________ -->
   <section id="parte3" style="display: none">
-  <!-- Boton Jugar --> 
-  <div class="cont-btnliguilla">
-    <button id="btn-liguilla" type="button" onclick="liguilla(); startLiguilla()" class="botones btn btn-primary btn-lg active">Liguilla!</button> 
-  </div>
 <!-- Tabla1 -->  
-  <div class="tab"> <!-- CONTENEDOR DE LAS DOS TABLAS -->
-    <div class="tablas">
-      <table id="tab-gral" class= "table-bordered table-striped table-dark">
-        <th id="tab-enc" class="encabezado .thead-light">Tabla General</th>
-        <tr id="tab-enc2">
-            <th>Pos. </th>
-            <th>Equipo </th>
-            <th>JJ </th>
-            <th>Pts </th>
-            <th>G </th>
-            <th>E </th>
-            <th>P </th>
-            <th>GF </th>
-            <th>GC </th>
-            <th>DG </th>
-        </tr>          
-      </table>
-    </div>
+  <div class="container-fluid"> <!-- CONTENEDOR DE LAS DOS TABLAS -->
+	<div class="row cont-btnliguilla">
+		<!-- Boton Jugar --> 
+		<button id="btn-liguilla" type="button" onclick="liguilla(); startLiguilla()" class="botones btn btn-primary btn-lg active">¡Liguilla!</button> 
+	</div>
+	<div class="row">
+		<div class="col-md-8" id="div-tab-gral">
+			<table id="tab-gral" class= "table-sm table-hover table-bordered table-striped table-dark">
+				<thead id="tab-enc" class="thead-dark">
+					<th>Tabla General</th>
+					<tr id="tab-enc2">
+						<th>Pos. </th>
+						<th>Equipo </th>
+						<th>JJ </th>
+						<th>Pts </th>
+						<th>G </th>
+						<th>E </th>
+						<th>P </th>
+						<th>GF </th>
+						<th>GC </th>
+						<th>DG </th>
+					</tr>          
+				</thead>
+				<tbody id="tbody-gral"></tbody>
+			</table>
+		</div>
 <!-- Tabla2 -->
-    <div class="tablas">
-      <table id="tab-goleo" class= "table-striped table-dark">
-        <th>Goleo Individual</th>
-        <tr>
-          <th>Jugador</th>
-          <th>Equipo</th>
-          <th>Goles</th>
-        </tr>
-      </table>
-    </div>
+		<div class="col-md-4" id="div-tab-goleo">
+			<table id="tab-goleo" class= "tamble-sm table-hover table-striped table-dark">
+				<thead id="tab-enc" class="thead-dark">
+					<th>Goleo Individual</th>
+					<tr>
+					<th>Jugador</th>
+					<th>Equipo</th>
+					<th>Goles</th>
+					</tr>
+				</thead>
+				<tbody id="tbody-goleo"></tbody>
+			</table>
+		</div>
+	</div>
   </div>
   </section>
   
-   <section id="parte4" style="display: none">
-   
-   <div class="cont-btnsiguiente">
-    <button id="btn-siguiente" type="button" onclick="siguiente(); ligNext()" class="botones btn btn-primary btn-lg active">Siguiente</button>
-   </div>
-  <div class="float-sm-left">
-  <div id="auto" class="cont-diagrama">  <!-- CONTENEDOR DEL DIAGRAMA
-    <!--Inicio de diagrama -->    
-    <div class="bracket">
-    <!-- Inician los cuartos de final -->
-      <section id="dg-cuart" class="round quarterfinals">
-        <div class="winners">
-          <div class="matchups">
-            <div class="matchup">
-              <div class="participants">
-                <div class="participant winner"><span id="dg-cuart1"></span></div> <!--id="auto" style="display: none" CON ESTO OCULTAMOS EL TEXTO Y DEJAMOS EL CUADRO VACIO(DENTRO DE SPAN)  -->
-                <div class="participant"><span id="dg-cuart2"></span></div>
-              </div>
-            </div>
-            <div class="matchup">
-              <div class="participants">
-                <div class="participant"><span id="dg-cuart3"></span></div>
-                <div class="participant winner"><span id="dg-cuart4"></span></div>
-              </div>
-            </div>
-          </div>
-          <div class="connector">
-            <div class="merger"></div>
-            <div class="line"></div>
-          </div>
-        </div>
-        <div class="winners">
-          <div class="matchups">
-            <div class="matchup">
-              <div class="participants">
-                <div class="participant"><span id="dg-cuart5"></span></div>
-                <div class="participant winner"><span id="dg-cuart6"></span></div>
-              </div>
-            </div>
-            <div class="matchup">
-              <div class="participants">
-                <div class="participant"><span id="dg-cuart7"></span></div>
-                <div class="participant winner"><span id="dg-cuart8"></span></div>
-              </div>
-            </div>
-          </div>
-          <div class="connector">
-            <div class="merger"></div>
-            <div class="line"></div>
-          </div>
-        </div>
-      </section>
-      <!-- HASTA AQUI SE MOSTRARA LA PRIMERA VEZ Y LOS CUADROS DE ABAJO ESTARAN VACIOS HASTA QUE DEN CLIC EN EL BOTON -->
-      
-      <!-- inicia la semifinal -->
-      <section id="semifinal" class="round semifinals"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
-        <div class="winners">
-          <div class="matchups"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
-            <div class="matchup">
-              <div class="participants"> <!-- "participant winner"=COLOCA UNA BARRITA DE COLOR DEL LADO IZQ Si colocamos desde aqui desaparece los dos cuadros -->
-                <div class="participant winner"><span id="dg-semi1" style="display:none"></span></div> <!-- Se mantendra oculto hasta dar clic(SPAN) -->
-                <div class="participant"><span id ="dg-semi2" style="display: none"></span></div>        <!-- Se mantendra oculto hasta dar clic -->
-              </div>
-            </div>
-            <div class="matchup">
-              <div class="participants">
-                <div class="participant winner"><span id="dg-semi3" style="display:none"></span></div> <!-- Se mantendra oculto hasta dar clic -->
-                <div class="participant"><span id="dg-semi4" style="display:none"></span></div>       <!-- Se mantendra oculto hasta dar clic -->
-              </div>
-            </div>
-          </div>
-          <div class="connector">
-            <div class="merger"></div>
-            <div class="line"></div>
-          </div>
-        </div>
-      </section>
-      <!-- Hasta aqui se mostrara el diagrama -->
-      
-      <!-- Esta parte se mantendra oculta hasta que den clic en el boton-->
-      <!-- Inicia la final-->
-      <section id="dg-final" class="round finals"> <!-- style="display: none" DESDE AQUI OCULTAREMOS PARA LA FINAL-->
-        <div class="winners">
-          <div class="matchups">
-            <div class="matchup">
-              <div class="participants">
-                <div class="participant winner"><span id="dg-final1" style="display:none"></span></div>  
-                <div class="participant"><span id="dg-final2" style="display:none"></span></div>        
-              </div>
-            </div>
-          </div>
-          <div class="connector"> <!--AGREGAMOS LINEAS DE CONEXIONES PARA EL RECUADRO QUE MOSTRARA AL CAMPEON--> 
-            <div class="merger"></div>
-            <div class="line"></div>
-          </div>
-        </div>
-      </section>
-      
-     <!--PARTE DONDE SE AGREGO EL CUADRO DE CAMPEON -->
-     <section id="champion" class="round champion"> <!-- id="auto" style="display: none" DESDE AQUI OCULTAREMOS EL CUADRO DEL CAMPEON-->
-       <div class="winners">
-         <div class="matchups">
-           <div class="matchup">
-             <div class="participants">
-               <div class="participant winner"><span id="dg-campeon" style="display:none"></span></div>          
-             </div>
-           </div>
-         </div>
-         <!-- Img Copa -->
-         <div id="img-copa" class="copa">
-         <img src="img/logocopa.png" width="200" height="200"/>
-         </div>
-       </div>
-      </section>
-    </div> 
-  <br>
-  </div>
-  </div>
+			<!-- ____________________________________________Cuarta pantalla_____________________________________________ -->
+  <section id="parte4" style="display: none">
+   <div class="container-fluid">
+	<div class="row cont-btnliguilla">
+		<button id="btn-siguiente" type="button" onclick="siguiente(); ligNext()" class="botones btn btn-primary btn-lg active">Siguiente</button>
+	</div>
+	<div class="row">
+		<!--Inicio de diagrama -->    
+		<div class="bracket">
+		<!-- Inician los cuartos de final -->
+		  <section id="dg-cuart" class="round quarterfinals">
+			<div class="winners">
+			  <div class="matchups">
+				<div class="matchup">
+				  <div class="participants">
+					<div class="participant winner"><span id="dg-cuart1"></span></div> <!--id="auto" style="display: none" CON ESTO OCULTAMOS EL TEXTO Y DEJAMOS EL CUADRO VACIO(DENTRO DE SPAN)  -->
+					<div class="participant"><span id="dg-cuart2"></span></div>
+				  </div>
+				</div>
+				<div class="matchup">
+				  <div class="participants">
+					<div class="participant"><span id="dg-cuart3"></span></div>
+					<div class="participant winner"><span id="dg-cuart4"></span></div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="connector">
+				<div class="merger"></div>
+				<div class="line"></div>
+			  </div>
+			</div>
+			<div class="winners">
+			  <div class="matchups">
+				<div class="matchup">
+				  <div class="participants">
+					<div class="participant"><span id="dg-cuart5"></span></div>
+					<div class="participant winner"><span id="dg-cuart6"></span></div>
+				  </div>
+				</div>
+				<div class="matchup">
+				  <div class="participants">
+					<div class="participant"><span id="dg-cuart7"></span></div>
+					<div class="participant winner"><span id="dg-cuart8"></span></div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="connector">
+				<div class="merger"></div>
+				<div class="line"></div>
+			  </div>
+			</div>
+		  </section>
+		  <!-- HASTA AQUI SE MOSTRARA LA PRIMERA VEZ Y LOS CUADROS DE ABAJO ESTARAN VACIOS HASTA QUE DEN CLIC EN EL BOTON -->
+		  
+		  <!-- inicia la semifinal -->
+		  <section id="semifinal" class="round semifinals"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
+			<div class="winners">
+			  <div class="matchups"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
+				<div class="matchup">
+				  <div class="participants"> <!-- "participant winner"=COLOCA UNA BARRITA DE COLOR DEL LADO IZQ Si colocamos desde aqui desaparece los dos cuadros -->
+					<div class="participant winner"><span id="dg-semi1" style="display:none"></span></div> <!-- Se mantendra oculto hasta dar clic(SPAN) -->
+					<div class="participant"><span id ="dg-semi2" style="display: none"></span></div>        <!-- Se mantendra oculto hasta dar clic -->
+				  </div>
+				</div>
+				<div class="matchup">
+				  <div class="participants">
+					<div class="participant winner"><span id="dg-semi3" style="display:none"></span></div> <!-- Se mantendra oculto hasta dar clic -->
+					<div class="participant"><span id="dg-semi4" style="display:none"></span></div>       <!-- Se mantendra oculto hasta dar clic -->
+				  </div>
+				</div>
+			  </div>
+			  <div class="connector">
+				<div class="merger"></div>
+				<div class="line"></div>
+			  </div>
+			</div>
+		  </section>
+		  <!-- Hasta aqui se mostrara el diagrama -->
+		  
+		  <!-- Esta parte se mantendra oculta hasta que den clic en el boton-->
+		  <!-- Inicia la final-->
+		  <section id="dg-final" class="round finals"> <!-- style="display: none" DESDE AQUI OCULTAREMOS PARA LA FINAL-->
+			<div class="winners">
+			  <div class="matchups">
+				<div class="matchup">
+				  <div class="participants">
+					<div class="participant winner"><span id="dg-final1" style="display:none"></span></div>  
+					<div class="participant"><span id="dg-final2" style="display:none"></span></div>        
+				  </div>
+				</div>
+			  </div>
+			  <div class="connector"> <!--AGREGAMOS LINEAS DE CONEXIONES PARA EL RECUADRO QUE MOSTRARA AL CAMPEON--> 
+				<div class="merger"></div>
+				<div class="line"></div>
+			  </div>
+			</div>
+		  </section>
+		  
+		 <!--PARTE DONDE SE AGREGO EL CUADRO DE CAMPEON -->
+		 <section id="champion" class="round champion"> <!-- id="auto" style="display: none" DESDE AQUI OCULTAREMOS EL CUADRO DEL CAMPEON-->
+		   <div class="winners">
+			 <div class="matchups">
+			   <div class="matchup">
+				 <div class="participants">
+				   <div class="participant winner"><span id="dg-campeon" style="display:none"></span></div>          
+				 </div>
+			   </div>
+			 </div>
+			 <!-- Img Copa -->
+			 <div id="img-copa" class="copa">
+			 <img src="img/logocopa.png" width="200" height="200" class="img-fluid">
+			 </div>
+		   </div>
+		  </section>
+		</div>
+	</div>
   </section>
- 
- 
+			<!-- ____________________________________________Quinta pantalla_____________________________________________ -->
   <section id="parte5" style="display: none">
     <div class="cont-btninicio">
     <button id="btn-reset" type="button" onclick="inicio(); reset();" class="botones btn btn-primary btn-lg active">Reset</button>
@@ -215,4 +235,8 @@
   <script src="js/tournament.js"></script>
   <script src="js/instrucciones.js"></script>
 </body>
+<footer>
+	<!-- ________________________________________________Footer de la pagina web_____________________________________________________ -->
+	<p>	</p>
+</footer>
 </html>
