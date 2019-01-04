@@ -33,6 +33,6 @@ ddb.scan(params, function(err, data) {
 function sortTable(dataItems)
 {
     //sort items by the way desire
-    var sorted = dataItems.sort((a, b) => b.POINTS - a.POINTS);
+    var sorted = dataItems.sort((a, b) => (a.POINTS == b.POINTS)? ((b.DIF == a.DIF)? b.GF - a.GF : b.DIF - a.DIF) : b.POINTS - a.POINTS);
     return sorted;
 }

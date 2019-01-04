@@ -41,10 +41,16 @@ var vA;
 var vB;
 var cont=0;
 var g=0;
+//Variables para manejo del arreglo auxiliar de liguilla
+var   contLiguilla      = 0;
+const constanteLiguilla = 9;
 
 
     
 //*****ARRAYS*****
+
+//AUXILIAR ARRAY FOR LIGUILLA
+var liguillaArray = new Array(4);
 
 //Team names
 var teamsArray = [
@@ -144,19 +150,21 @@ function getOctFn(){
 }
 
 function getSemf(){
-    aLigSemf1[0]= aLigOctA1[getRndInteger()];
-    aLigSemf1[1]= aLigOctA2[getRndInteger()];
-    aLigSemf2[0]= aLigOctB1[getRndInteger()];
-    aLigSemf2[1]= aLigOctB2[getRndInteger()];
+    aLigSemf1[0]= aLigOctA1[getLgByProb(1,8)];
+    aLigSemf1[1]= aLigOctA2[getLgByProb(3,6)];
+    aLigSemf2[0]= aLigOctB1[getLgByProb(4,5)];
+    aLigSemf2[1]= aLigOctB2[getLgByProb(2,7)];
 }
 
 function getFinal(){
-    aLigFinal[0]= aLigSemf1[getRndInteger()];
-    aLigFinal[1]= aLigSemf2[getRndInteger()];
+    contLiguilla = 0;
+    aLigFinal[0] = aLigSemf1[getLgByProb(0,1)];
+    aLigFinal[1] = aLigSemf2[getLgByProb(3,2)];
 }
 
 function getCamp(){
-    vCampeon= aLigFinal[getRndInteger()];
+    contLiguilla = 0;
+    vCampeon     = aLigFinal[getLgByProb(0,1)];
 }
 
 //*****SIMULATE MATCH*****
@@ -175,6 +183,21 @@ function simulateMatch()
 function getRndInteger() 
 {
   return Math.floor(Math.random() * 2);
+}
+
+//*****GET LIGUILLA BY PROBABILITY*****
+function getLgByProb(posA, posB) 
+{
+    //QUARTER FINALS
+    if(x == 1){
+        liguillaArray[contLiguilla] = (Math.floor(Math.random() * 100 + 1) <= ((constanteLiguilla - posB) * 10))? posB : posA;
+        return (liguillaArray[contLiguilla++] == posA)? 0 : 1;
+    }
+    //SEMIFINALS AND FINAL
+    else if(x == 2 || x == 3){
+        liguillaArray[contLiguilla] = (Math.floor(Math.random() * 100 + 1) <= Math.round(100 - (100 * (liguillaArray[posB] + constanteLiguilla))/(liguillaArray[posA] + liguillaArray[posB] + (constanteLiguilla * 2))))? liguillaArray[posB] : liguillaArray[posA];
+        return (liguillaArray[contLiguilla++] == liguillaArray[posB])? 1 : 0;
+    }
 }
 
 //*****PLAYERS GOALS SUM*****
@@ -363,7 +386,9 @@ var resultTeamB = teamBGoals.reduce(matchResult, 0);
 
 //*****RESET FUNCTION*****	
 function reset(){
-	document.getElementById("btn-jugar").disabled = true; 
+	document.getElementById("btn-jugar").disabled = true;
+    contLiguilla = 0;
+    liguillaArray = [0, 0, 0, 0];
     x=0;
 	var tableIndex;
     scontAmG3="";
