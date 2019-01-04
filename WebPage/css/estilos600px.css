@@ -1,0 +1,206 @@
+body {
+  background-color: #9a9292;
+  font-family: 'Work Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.Logo {
+   height:auto;
+   margin:auto;
+   display:block;
+}
+.cont-btnjugar{/*SE APLICA AL CONTENEDOR DEL BOTON PERO NO AL BOTON EN SI*/
+   text-align: center;
+   height:auto;
+   position: relative;
+   top:20px;
+}
+#btn-jugar, #btn-liguilla{/*SE REDONDEA EL BOTON JUGAR, BOTON LIGUILLA*/
+   border-radius:10px;
+}
+
+#div-tab-gral, #div-tab-goleo{
+	padding-top: 50px;
+}
+
+#ul-semifinal{
+	padding-left: 0px;
+}
+
+.bienvenido{
+  top:50px;
+  background:#9a9292;
+  border:0px;
+}
+.loading{
+  text-align: center;
+}
+img {
+  display: block;
+  height: auto;
+  margin:auto;
+  border-radius:10px;
+}
+.cont-btninicio{
+   text-align: center;
+   height:auto;
+   position: relative;
+   top:20px;
+}
+/*--------------INDEX2-------------------------*/
+.table-sm {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/*------------------INDEX3---------------------------*/
+
+
+.copa{
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+.cont-diagrama{
+   position: static;
+   right: -800px;
+}
+
+.copa{
+   background:#9a9292;
+   display: flex;
+   top: 300px;
+}
+
+
+/*-----------------DIAGRAMA DE JUEGOS--------------*/
+
+/*POSCISIONA EL DIAGRAMA EN UN LUGAR EN PARTICULAR(COMO SI FUERAN COORDENADAS TRANSLATE)*/
+.bracket {
+  white-space: nowrap;
+  font-size: 0;
+}
+.bracket-title{
+  color: #0e0e0e;
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 0.5em;
+}
+
+.bracket .round {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bracket .round .winners > div {
+  display: inline-block;
+  vertical-align: middle;
+  padding-top: 10px;
+}
+
+/*FONDO DE COLOR, BORDES DEL DIAGRAMA*/
+.bracket .round .winners > div.matchups .matchup .participants .participant {
+  box-sizing: border-box;
+  color: #858585;
+  border-left: 0.25rem solid #858585;
+  background: white;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 15px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
+}
+
+/*TEXTO Y BORDE VERDE DE CUADROS DE DIAGRAMA*/
+.bracket .round .winners > div.matchups .matchup .participants .participant.winner {
+  color: #60c645;
+  border-color: #60c645;
+}
+/*
+/*TEXTO Y BORDE GRIS DE CUADROS DE DIAGRAMA
+.bracket .round .winners > div.matchups .matchup .participants .participant.loser {
+  color: #dc563f;
+  border-color: #dc563f;
+}
+*/
+/*SUBRAYADO DEL TEXTO DENTRO DEL CUADRO DE DIAGRAMA*/
+.bracket .round .winners > div.matchups .matchup .participants .participant:not(:last-child) {
+  border-bottom: thin solid #f0f2f2;
+}
+
+/*ESPACIO ENTRE RENGLONES DEL CUADRO DE DIAGRAMA(LINE-HEIGHT)*/
+.bracket .round .winners > div.matchups .matchup .participants .participant span {
+  margin: 0 1.25rem;
+  line-height: 3;
+  font-size: 1rem;
+  font-family: "Roboto Slab";
+}
+
+/*ALINEA CUARTOS Y SEMIFINAL EN LINEA DE BLOQUE*/
+.bracket .round .winners > div.connector .line, .bracket .round .winners > div.connector .merger {
+  box-sizing: border-box;
+  width: 2rem;
+  display: inline-block;
+  vertical-align: top;
+}
+/*APLICA A CUARTOS Y SEMIFINAL EN LA CLASE "LINE" ESTABLECE EL BORDE INFERIOR DE LOS ELEMENTOS*/
+.bracket .round .winners > div.connector .line {
+  border-bottom: thin solid #c0c0c8;
+  height: 4rem;
+}
+
+.bracket .round .winners > div.connector .merger {
+  position: relative;
+  height: 9rem;
+}
+
+.bracket .round .winners > div.connector .merger:before, .bracket .round .winners > div.connector .merger:after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50%;
+  border: 0 solid;
+  border-color: #c0c0c8;
+}
+/*DEFINE GROSOR DE LA LINEA DE RECUADROS VERDES*/
+.bracket .round .winners > div.connector .merger:before {
+  border-right-width: thin;
+  border-top-width: thin;
+}
+/*DEFINE GROSOR DE LA LINEA DE RECUADROS GRISES*/
+.bracket .round .winners > div.connector .merger:after {
+  border-right-width: thin;
+  border-bottom-width: thin;
+}
+
+/*SEPARA EL 1 Y 4 RECUADRO JUNTO CON SUS LINEAS A SEMIFINALES*/
+.bracket .round.quarterfinals .winners .matchups .matchup:not(:last-child) {
+  margin-bottom: 2rem;
+  
+}
+/*SEPARA LOS CUADROS DE SEMIFINALES(1,2 - 6,5)*/
+.bracket .round.semifinals .winners .matchups .matchup:not(:last-child) {
+  margin-bottom: 10rem;
+}
+/*TODO LO QUE SEA CONNECTOR ES EL DISEÑO PARA LAS LINEAS*/
+
+/*SEPARA LAS LINEAS QUE CONECTAN A LA FINAL (]-)*/
+.bracket .round.semifinals .winners .connector .merger {
+  height: 16rem;
+}
+/*SEPARA LA LINEA QUE APUNTA A LA FINAL(-----)*/
+
+.bracket .round.semifinals .winners .connector .line {
+  height: 8rem;
+}
+
+.bracket .round.finals .winners .connector .merger {
+  height: 3rem;
+}
+
+.bracket .round.finals .winners .connector .line {
+  height: 1.5rem;
+}
