@@ -6,9 +6,500 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <meta charset="utf-8"/>
       <link rel="stylesheet" href="css/bootstrap.min.css"/>
-      <link rel="stylesheet" media="(max-width: 4000px)" href="css/estilos1024px.css"/>
-	  <link rel="stylesheet" media="(max-width: 600px)" href="css/estilos600px.css" />
-	  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+      <link rel="stylesheet" href="css/estilos1024px.css" type="text/css"/>
+	  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	  <style>
+             /*!
+			 * Responsive Tournament Bracket
+			 * Copyright 2016 Jakub Hájek
+			 * Licensed under MIT (https://opensource.org/licenses/MIT)
+			 */
+			@font-face {
+			  font-family: 'Work Sans';
+			  font-style: normal;
+			  font-weight: 300;
+			  src: local('Work Sans Light'), local('WorkSans-Light'), url(https://fonts.gstatic.com/s/worksans/v3/QGYpz_wNahGAdqQ43Rh314L8lthI.ttf) format('truetype');
+			}
+			@font-face {
+			  font-family: 'Work Sans';
+			  font-style: normal;
+			  font-weight: 400;
+			  src: local('Work Sans'), local('WorkSans-Regular'), url(https://fonts.gstatic.com/s/worksans/v3/QGYsz_wNahGAdqQ43Rh_cqDs.ttf) format('truetype');
+			}
+			@font-face {
+			  font-family: 'Work Sans';
+			  font-style: normal;
+			  font-weight: 600;
+			  src: local('Work Sans SemiBold'), local('WorkSans-SemiBold'), url(https://fonts.gstatic.com/s/worksans/v3/QGYpz_wNahGAdqQ43Rh3o4T8lthI.ttf) format('truetype');
+			}
+			@font-face {
+			  font-family: 'Work Sans';
+			  font-style: normal;
+			  font-weight: 700;
+			  src: local('Work Sans Bold'), local('WorkSans-Bold'), url(https://fonts.gstatic.com/s/worksans/v3/QGYpz_wNahGAdqQ43Rh3x4X8lthI.ttf) format('truetype');
+			}
+			*,
+			*::before,
+			*::after {
+			  box-sizing: border-box;
+			}
+			html {
+			  font-size: 13px;
+			}
+			@media (min-width: 500px) {
+			  html {
+				font-size: 11px;
+			  }
+			}
+			@media (min-width: 800px) {
+			  html {
+				font-size: 13px;
+			  }
+			}
+			@media (min-width: 1100px) {
+			  html {
+				font-size: 15px;
+			  }
+			}
+			body {
+			  font-family: 'Work Sans', 'Helvetica Neue', Arial, sans-serif;
+			}
+			.container {
+			  width: 90%;
+			  min-width: 18em;
+			  margin: 20px auto;
+			}
+			h1,
+			h2 {
+			  text-align: center;
+			}
+			h1 {
+			  font-size: 2rem;
+			  font-weight: 700;
+			  margin-bottom: 0.5em;
+			}
+			h2 {
+			  font-size: 1.4rem;
+			  font-weight: 600;
+			  margin-bottom: 2em;
+			}
+			.sr-only {
+			  position: absolute;
+			  width: 1px;
+			  height: 1px;
+			  padding: 0;
+			  margin: -1px;
+			  overflow: hidden;
+			  clip: rect(0, 0, 0, 0);
+			  border: 0;
+			}
+			.tournament-bracket {
+			  display: flex;
+			  flex-direction: column;
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket {
+				flex-direction: row;
+			  }
+			}
+			.tournament-bracket__round {
+			  display: block;
+			  margin-left: -3px;
+			  flex: 1;
+			}
+			.tournament-bracket__round-title {
+			  color: #9e9e9e;
+			  font-size: 0.95rem;
+			  font-weight: 400;
+			  text-align: center;
+			  font-style: italic;
+			  margin-bottom: 0.5em;
+			}
+			.tournament-bracket__list {
+			  display: flex;
+			  margin-left: 0px;
+			  padding-left: 0px;
+			  flex-direction: column;
+			  flex-flow: row wrap;
+			  justify-content: center;
+			  height: 100%;
+			  min-height: 100%;
+			  border-bottom: 1px dashed #cccccc;
+			  padding-bottom: 2em;
+			  margin-bottom: 2em;
+			  transition: padding 0.2s ease-in-out, margin 0.2s ease-in-out;
+			}
+			@media (max-width: 400px) {
+			  .tournament-bracket__list {
+				padding-bottom: 1em;
+				margin-bottom: 1em;
+			  }
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket__list {
+				margin-bottom: 0;
+				padding-bottom: 0;
+				border-bottom: 0;
+			  }
+			}
+			.tournament-bracket__round:last-child .tournament-bracket__list {
+			  border: 0;
+			}
+			.tournament-bracket__item {
+			  display: flex;
+			  flex: 0 1 auto;
+			  justify-content: center;
+			  flex-direction: column;
+			  align-items: flex-start;
+			  position: relative;
+			  padding: 2% 0;
+			  width: 48%;
+			  transition: padding 0.2s linear;
+			}
+			.tournament-bracket__item:nth-child(odd) {
+			  margin-right: 2%;
+			}
+			.tournament-bracket__item:nth-child(even) {
+			  margin-left: 2%;
+			}
+			.tournament-bracket__item::after {
+			  transition: width 0.2s linear;
+			}
+			@media (max-width: 400px) {
+			  .tournament-bracket__item {
+				width: 100%;
+			  }
+			  .tournament-bracket__item:nth-child(odd),
+			  .tournament-bracket__item:nth-child(even) {
+				margin-left: 0;
+				margin-right: 0;
+			  }
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket__item {
+				padding: 0.5em 1em;
+				width: 100%;
+			  }
+			  .tournament-bracket__item:nth-child(odd),
+			  .tournament-bracket__item:nth-child(even) {
+				margin: 0;
+			  }
+			  .tournament-bracket__item::after {
+				position: absolute;
+				right: 0;
+				content: '';
+				display: block;
+				width: 1em;
+				height: 45%;
+				border-right: 2px solid #cccccc;
+			  }
+			  .tournament-bracket__item:nth-child(odd)::after {
+				top: 50%;
+				border-top: 2px solid #cccccc;
+				-webkit-transform: translateY(-1px);
+						transform: translateY(-1px);
+			  }
+			  .tournament-bracket--rounded .tournament-bracket__item:nth-child(odd)::after {
+				border-top-right-radius: 0.6em;
+			  }
+			  .tournament-bracket__item:nth-child(even)::after {
+				bottom: 50%;
+				border-bottom: 2px solid #cccccc;
+				-webkit-transform: translateY(1px);
+						transform: translateY(1px);
+			  }
+			  .tournament-bracket--rounded .tournament-bracket__item:nth-child(even)::after {
+				border-bottom-right-radius: 0.6em;
+			  }
+			  .tournament-bracket__round:first-child .tournament-bracket__item {
+				padding-left: 0;
+			  }
+			  .tournament-bracket__round:last-child .tournament-bracket__item {
+				padding-right: 0;
+			  }
+			  .tournament-bracket__round:last-child .tournament-bracket__item::after {
+				display: none;
+			  }
+			  .tournament-bracket__round:nth-last-child(2) .tournament-bracket__item::after {
+				border-radius: 0;
+				border-right: 0;
+			  }
+			}
+			@media (min-width: 1000px) {
+			  .tournament-bracket__item {
+				padding: 0.5em 1.5em;
+			  }
+			  .tournament-bracket__item::after {
+				width: 1.5em;
+			  }
+			}
+			.tournament-bracket__match {
+			  display: flex;
+			  width: 100%;
+			  background-color: #ffffff;
+			  padding: 1em;
+			  border: 1px solid #303030;
+			  border-radius: 10px;
+			  box-shadow: 0 0 8px 0 #3a3333bf;
+			  border-left: 0.40rem solid #3a3333bf;
+			  outline: none;
+			  cursor: pointer;
+			  transition: padding 0.2s ease-in-out, border 0.2s linear;
+			}
+			.tournament-bracket__match-color {
+			  display: flex;
+			  width: 100%;
+			  background-color: #ffffff;
+			  padding: 1em;
+			  border: 1px solid #303030;
+			  border-radius: 10px;
+			  box-shadow: 0 0 8px 0 #3a3333bf;
+			  border-left: 0.40rem solid #60c645;
+			  outline: none;
+			  cursor: pointer;
+			  transition: padding 0.2s ease-in-out, border 0.2s linear;
+			}
+			.tournament-bracket__match:focus {
+			  border-color: #2196F3;
+			}
+			.tournament-bracket__match::before,
+			.tournament-bracket__match::after {
+			  transition: all 0.2s linear;
+			}
+			@media (max-width: 400px) {
+			  .tournament-bracket__match {
+				padding: 0.75em 0.5em;
+			  }
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket__match::before,
+			  .tournament-bracket__match::after {
+				position: absolute;
+				left: 1px;
+				z-index: 1;
+				content: '';
+				display: block;
+				width: 1em;
+				height: 10%;
+				border-left: 2px solid #cccccc;
+			  }
+			  .tournament-bracket__match::before {
+				bottom: 50%;
+				border-bottom: 2px solid #cccccc;
+				-webkit-transform: translate(0, 1px);
+						transform: translate(0, 1px);
+			  }
+			  .tournament-bracket--rounded .tournament-bracket__match::before {
+				border-bottom-left-radius: 0.6em;
+			  }
+			  .tournament-bracket__match::after {
+				top: 50%;
+				border-top: 2px solid #cccccc;
+				-webkit-transform: translate(0, -1px);
+						transform: translate(0, -1px);
+			  }
+			  .tournament-bracket--rounded .tournament-bracket__match::after {
+				border-top-left-radius: 0.6em;
+			  }
+			}
+			@media (min-width: 1000px) {
+			  .tournament-bracket__match::before,
+			  .tournament-bracket__match::after {
+				width: 1.5em;
+			  }
+			  .tournament-bracket__match::before {
+				-webkit-transform: translate(0, 1px);
+						transform: translate(0, 1px);
+			  }
+			  .tournament-bracket__match::after {
+				-webkit-transform: translate(0, -1px);
+						transform: translate(0, -1px);
+			  }
+			}
+			.tournament-bracket__round:last-child .tournament-bracket__match::before,
+			.tournament-bracket__round:last-child .tournament-bracket__match::after {
+			  border-left: 0;
+			}
+			.tournament-bracket__round:last-child .tournament-bracket__match::before {
+			  border-bottom-left-radius: 0;
+			}
+			.tournament-bracket__round:last-child .tournament-bracket__match::after {
+			  display: none;
+			}
+			.tournament-bracket__round:first-child .tournament-bracket__match::before,
+			.tournament-bracket__round:first-child .tournament-bracket__match::after {
+			  display: none;
+			}
+			.tournament-bracket__content {
+			  display: flex;
+			}
+			.tournament-bracket__content::after {
+			  content: ':';
+			  width: 1em;
+			  text-align: center;
+			  padding: 0.2em 0.1em;
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket__content::after {
+				order: 1;
+			  }
+			}
+			.tournament-bracket__content .tournament-bracket__team:first-child {
+			  width: 50%;
+			  order: 0;
+			  text-align: right;
+			}
+			@media (min-width: 500px) and (max-width: 650px) {
+			  .tournament-bracket__content .tournament-bracket__team:first-child {
+				align-items: flex-end;
+			  }
+			}
+			.tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__country {
+			  order: 2;
+			  justify-content: flex-end;
+			}
+			@media (min-width: 400px) {
+			  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__country {
+				order: 0;
+			  }
+			}
+			@media (min-width: 500px) and (max-width: 650px) {
+			  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__country {
+				flex-direction: column-reverse;
+				align-items: flex-end;
+			  }
+			}
+			.tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__score {
+			  order: 0;
+			}
+			@media (min-width: 400x) {
+			  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__score {
+				order: 2;
+			  }
+			}
+			.tournament-bracket__content .tournament-bracket__team:last-child {
+			  width: 50%;
+			  order: 2;
+			  text-align: left;
+			}
+			@media (min-width: 500px) and (max-width: 650px) {
+			  .tournament-bracket__content .tournament-bracket__team:last-child {
+				align-items: flex-start;
+			  }
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket__content .tournament-bracket__team:last-child .tournament-bracket__country {
+				justify-content: flex-start;
+			  }
+			}
+			@media (min-width: 500px) and (max-width: 550px) {
+			  .tournament-bracket__content .tournament-bracket__team:last-child .tournament-bracket__country {
+				align-items: flex-start;
+			  }
+			}
+			.tournament-bracket__content .tournament-bracket__team:last-child .tournament-bracket__code {
+			  order: 1;
+			}
+			.tournament-bracket__table {
+			  width: 100%;
+			}
+			.tournament-bracket__caption {
+			  font-size: 0.8rem;
+			  color: #BDBDBD;
+			  font-weight: 300;
+			  padding-bottom: 0.75em;
+			}
+			.tournament-bracket__team {
+			  display: flex;
+			  flex-direction: row-reverse;
+			  justify-content: space-between;
+			}
+			@media (min-width: 400px) {
+			  .tournament-bracket__team {
+				flex-direction: column-reverse;
+			  }
+			}
+			@media (min-width: 500px) {
+			  .tournament-bracket__team {
+				flex-direction: column-reverse;
+			  }
+			}
+			.tournament-bracket__country {
+			  font-size: 0.95rem;
+			  display: flex;
+			  margin-top: 0.5em;
+			  align-items: center;
+			}
+			@media (max-width: 400px) {
+			  .tournament-bracket__country {
+				margin-top: 0;
+			  }
+			}
+			@media (min-width: 500px) and (max-width: 550px) {
+			  .tournament-bracket__country {
+				display: flex;
+				flex-direction: column;
+			  }
+			  .tournament-bracket__country .tournament-bracket__code {
+				margin-top: 0.2em;
+			  }
+			}
+			.tournament-bracket__code {
+			  padding: 0 0.5em;
+			  color: #212121;
+			  font-weight: 600;
+			  text-transform: uppercase;
+			  border: 0;
+			  text-decoration: none;
+			  cursor: help;
+			  transition: padding 0.2s ease-in-out;
+			}
+			@media (max-width: 400px) {
+			  .tournament-bracket__code {
+				padding: 0 0.25em;
+			  }
+			}
+			@media (min-width: 500px) and (max-width: 650px) {
+			  .tournament-bracket__code {
+				padding: 0;
+			  }
+			}
+			.tournament-bracket__score {
+			  display: flex;
+			  align-items: center;
+			}
+			.tournament-bracket__team:first-child .tournament-bracket__score {
+			  flex-direction: row-reverse;
+			  padding-left: 0.75em;
+			}
+			.tournament-bracket__team:last-child .tournament-bracket__score {
+			  padding-right: 0.75em;
+			}
+			.tournament-bracket__number {
+			  display: inline-block;
+			  padding: 0.2em 0.4em 0.2em;
+			  border-bottom: 0.075em solid transparent;
+			  font-size: 0.95rem;
+			  background-color: #F5F5F5;
+			  border-color: #dddddd;
+			}
+			.tournament-bracket__team--winner .tournament-bracket__number {
+			  background-color: #FFF176;
+			  border-color: #fad674;
+			}
+			.tournament-bracket__medal {
+			  padding: 0 0.5em;
+			}
+			.tournament-bracket__medal--gold {
+			  color: #FFD700;
+			}
+			.tournament-bracket__medal--silver {
+			  color: #C0C0C0;
+			}
+			.tournament-bracket__medal--bronze {
+			  color: #CD7F32;
+			}
+		</style>
   </head>
 <header>
 	<!-- ________________________________________________Header de la pagina web_____________________________________________________ -->
@@ -98,171 +589,285 @@
   
 			<!-- ____________________________________________Cuarta pantalla_____________________________________________ -->
   <section id="parte4" style="display: none">
-   <div class="container-fluid">
-	<div class="row cont-btnliguilla">
-		<button id="btn-siguiente" type="button" onclick="siguiente(); ligNext()" class="btn-floating btn-primary btn-lg">Siguiente</button>
-	</div>
-	<div class="row">
+	<div class="container">
+		<h2>Diagrama final de Torneo</h2>
+		<div class="row cont-btnliguilla">
+			<button id="btn-siguiente" type="button" onclick="siguiente(); ligNext()" class="btn-primary btn-lg">Siguiente</button>
+		</div>
 	  	<!--Inicio de diagrama -->    
-		<div class="bracket col-md-12">
+		<div class="tournament-bracket tournament-bracket--rounded">
 		<!-- Inician los cuartos de final -->
-		  <div id="dg-cuart" class="round quarterfinals">
+		  <div class="tournament-bracket__round tournament-bracket__round--quarterfinals">
 			<h3 class="bracket-title">Cuartos de final</h3>
-			<ul>
-				<li>
-					<div class="winners">
-					  <div class="matchups">
-						<div class="matchup">
-						  <div class="participants">
-							<div class="participant winner">
-								<span id="dg-cuart1"></span>
-							</div> 
-							<div class="participant">
-								<span id="dg-cuart2"></span>
-							</div>
-						  </div>
-						</div>
-						<div class="matchup">
-						  <div class="participants">
-							<div class="participant winner">
-								<span id="dg-cuart3"></span>
-							</div>
-							<div class="participant">
-								<span id="dg-cuart4"></span>
-							</div>
-						  </div>
-						</div>
-					  </div>
-					  <div class="connector">
-						<div class="merger"></div>
-						<div class="line"></div>
-					  </div>
+			<ul class="tournament-bracket__list">
+				<li class="tournament-bracket__item">
+					<div class="tournament-bracket__match-color" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart1"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart1-gol">1</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart2"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart2-gol">4</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
 					</div>
 				</li>
-				<li>
-					<div class="winners">
-					  <div class="matchups">
-						<div class="matchup">
-						  <div class="participants">
-							<div class="participant winner">
-								<span id="dg-cuart5"></span>
-							</div>
-							<div class="participant">
-								<span id="dg-cuart6"></span>
-							</div>
-						  </div>
-						</div>
-						<div class="matchup">
-						  <div class="participants">
-							<div class="participant winner">
-								<span id="dg-cuart7"></span>
-							</div>
-							<div class="participant">
-								<span id="dg-cuart8"></span>
-							</div>
-						  </div>
-						</div>
-					  </div>
-					  <div class="connector">
-						<div class="merger"></div>
-						<div class="line"></div>
-					  </div>
+				<li class="tournament-bracket__item">
+					<!--<div class="winners">-->
+					<div class="tournament-bracket__match" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart3"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart3-gol">4</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart4"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart4-gol">1</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
 					</div>
+				</li>
+				<li class="tournament-bracket__item">
+				  <div class="tournament-bracket__match-color" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart5"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart5-gol">2</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart6"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart6-gol">1</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
+				</li>
+
+				<li class="tournament-bracket__item">
+				  <div class="tournament-bracket__match" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart7"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart7-gol">4</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-cuart8"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-cuart8-gol">1</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
 				</li>
 			</ul>
 		  </div>
 		  <!-- HASTA AQUI SE MOSTRARA LA PRIMERA VEZ Y LOS CUADROS DE ABAJO ESTARAN VACIOS HASTA QUE DEN CLIC EN EL BOTON -->
 		  <!-- inicia la semifinal -->
-		  <div id="semifinal" class="round semifinals"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
-			<h3 class="bracket-title">Semifinal</h3>
-			<ul id="ul-semifinal">
-				<li>
-					<div class="winners">
-					  <div class="matchups"> <!-- SI OCULTAMOS AQUI DESAPARECE LA TAB Y SE QUEDAN LAS LINEAS-->
-						<div class="matchup">
-						  <div class="participants"> <!-- "participant winner"=COLOCA UNA BARRITA DE COLOR DEL LADO IZQ Si colocamos desde aqui desaparece los dos cuadros -->
-							<div class="participant winner">
-								<span id="dg-semi1" style="display:none"></span>
-							</div> <!-- Se mantendra oculto hasta dar clic(SPAN) -->
-							<div class="participant">
-								<span id ="dg-semi2" style="display: none"></span>
-							</div>        <!-- Se mantendra oculto hasta dar clic -->
-						  </div>
-						</div>
-						<div class="matchup">
-						  <div class="participants">
-							<div class="participant winner">
-								<span id="dg-semi3" style="display:none"></span>
-							</div> <!-- Se mantendra oculto hasta dar clic -->
-							<div class="participant">
-								<span id="dg-semi4" style="display:none"></span>
-							</div>       <!-- Se mantendra oculto hasta dar clic -->
-						  </div>
-						</div>
-					  </div>
-					  <div class="connector">
-						<div class="merger"></div>
-						<div class="line"></div>
-					  </div>
-					</div>
+		  <div class="tournament-bracket__round tournament-bracket__round--semifinals">
+			  <h3 class="bracket-title">Semifinal</h3>
+			  <ul class="tournament-bracket__list">
+				<li class="tournament-bracket__item">
+				  <div class="tournament-bracket__match-color" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-semi1"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-semi1-gol">1</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-semi2"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-semi2-gol">2</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
 				</li>
-			</ul>
-		  </div>
+
+				<li class="tournament-bracket__item">
+				  <div class="tournament-bracket__match" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-semi3"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-semi3-gol">4</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-semi4"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-semi4-gol">7</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
+				</li>
+			  </ul>
+			</div>
 		  <!-- Hasta aqui se mostrara el diagrama -->
 		  
 		  <!-- Esta parte se mantendra oculta hasta que den clic en el boton-->
 		  <!-- Inicia la final-->
-		  <div id="dg-final" class="round finals"> <!-- style="display: none" DESDE AQUI OCULTAREMOS PARA LA FINAL-->
-			<h3 class="bracket-title">Final</h3>
-			<ul id="ul-semifinal">
-				<li>
-					<div class="winners">
-					  <div class="matchups">
-						<div class="matchup">
-						  <div class="participants">
-							<div class="participant winner">
-								<span id="dg-final1" style="display:none"></span>
-							</div>  
-							<div class="participant">
-								<span id="dg-final2" style="display:none"></span>
-							</div>        
-						  </div>
-						</div>
-					  </div>
-					  <div class="connector"> <!--AGREGAMOS LINEAS DE CONEXIONES PARA EL RECUADRO QUE MOSTRARA AL CAMPEON--> 
-						<div class="merger"></div>
-						<div class="line"></div>
-					  </div>
-					</div>
+		  <div class="tournament-bracket__round tournament-bracket__round--bronze">
+			  <h3 class="bracket-title">Final</h3>
+			  <ul class="tournament-bracket__list">
+				<li class="tournament-bracket__item">
+				  <div class="tournament-bracket__match-color" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-final1"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-final1-gol">3</span>-->
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-final2"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number" id="dg-final2-gol">2</span>-->
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
 				</li>
-			</ul>
-		  </div>
-		  
+			  </ul>
+			</div>
 		 <!--PARTE DONDE SE AGREGO EL CUADRO DE CAMPEON -->
-		 <div id="champion" class="round champion"> <!-- id="auto" style="display: none" DESDE AQUI OCULTAREMOS EL CUADRO DEL CAMPEON-->
-			<h3 class="bracket-title">Campeón</h3>
-			<ul id="ul-semifinal">
-				<li>
-				   <div class="winners">
-					 <div class="matchups">
-					   <div class="matchup">
-						 <div class="participants">
-						   <div class="participant winner">
-								<span id="dg-campeon" style="display:none"></span>
-						   </div>          
-						 </div>
-					   </div>
-					 </div>
-					 <!-- Img Copa -->
-					 <div id="img-copa" class="copa">
-					 <img src="img/logocopa.png" width="200" height="200" class="img-fluid">
-					 </div>
-				   </div>
+		 <div class="tournament-bracket__round tournament-bracket__round--gold">
+			  <h3 class="bracket-title">Campeón</h3>
+			  <ul class="tournament-bracket__list">
+				<li class="tournament-bracket__item">
+				  <div class="tournament-bracket__match" tabindex="0">
+					<table class="tournament-bracket__table">
+					  <thead class="sr-only">
+						<tr>
+						  <th>Team</th>
+						  <th>Score</th>
+						</tr>
+					  </thead>  
+					  <tbody class="tournament-bracket__content">
+						<tr class="tournament-bracket__team tournament-bracket__team--winner">
+						  <td class="tournament-bracket__country">
+							<span class="tournament-bracket__code" id="dg-campeon"></span>
+						  </td>
+						  <td class="tournament-bracket__score">
+							<!--<span class="tournament-bracket__number">1</span>-->
+							<span class="tournament-bracket__medal tournament-bracket__medal--gold fa fa-trophy" aria-label="Gold medal"></span>
+						  </td>
+						</tr>
+						<tr class="tournament-bracket__team">
+							<td>
+								<div id="img-copa" class="copa">
+									<img src="img/logocopa.png" class="img-fluid"/>
+								</div>
+							</td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
 				</li>
-			</ul>
-		  </div>
+			  </ul>
+			</div>
 		</div>
-	</div>
    </div>
   </section>
 	
