@@ -26,7 +26,11 @@ import junit.framework.TestCase;
 
 public class TestSeleniumWD extends TestCase {
 	protected WebDriver driver;
-	boolean f;
+	//Link de UAT-Pruebas
+	String baseUrlUAT = "http://soccerbucketfortest.s3-website.us-east-2.amazonaws.com/index.html";
+	//Link de Produccion
+	String baseUrlPROD = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/index.html";
+	
 	protected void setUp() throws Exception {
 		super.setUp();
 		//instancio el webdriver
@@ -66,9 +70,10 @@ public class TestSeleniumWD extends TestCase {
 	{	
 		//Test 1 funcional
 		
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+		
 		//abro el navegador
-		driver.get(baseUrl);		
+		driver.get(baseUrlPROD);
+        Thread.sleep(2000);		
 		//Localizar el boton por medio de su id.
 		isElementPresent("btn-jugar");
 		WebElement juagar = driver.findElement(By.id("btn-jugar"));
@@ -90,9 +95,9 @@ public class TestSeleniumWD extends TestCase {
 	public void testOpenPage2() throws InterruptedException
 	{	
 		//Test 2 funcional 
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+		
 		//abro el navegador
-		driver.get(baseUrl);
+		driver.get(baseUrlPROD);
 		//Localizar el boton por medio de su id.
 		WebElement juagar = (new WebDriverWait(driver, 60))
 		  .until(ExpectedConditions.presenceOfElementLocated(By.id("btn-jugar")));		
@@ -117,9 +122,9 @@ public class TestSeleniumWD extends TestCase {
 	public void testOpenPage3() throws InterruptedException
 	{	
 		//Test 3 funcional
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+		
 		//abro el navegador
-		driver.get(baseUrl);
+		driver.get(baseUrlPROD);
 		//Localizar el boton por medio de su id.
 		WebElement juagar = (new WebDriverWait(driver, 60))
 		  .until(ExpectedConditions.presenceOfElementLocated(By.id("btn-jugar")));		
@@ -144,9 +149,9 @@ public class TestSeleniumWD extends TestCase {
 	public void testOpenPage4() throws InterruptedException
 	{	
 		//Test 4 funcional
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+
 		//abro el navegador
-		driver.get(baseUrl);
+		driver.get(baseUrlPROD);
 		//Localizar el boton por medio de su id.
 		WebElement juagar = (new WebDriverWait(driver, 60))
 		  .until(ExpectedConditions.presenceOfElementLocated(By.id("btn-jugar")));		
@@ -175,9 +180,9 @@ public class TestSeleniumWD extends TestCase {
 	public void testOpenPage5() throws InterruptedException
 	{	
 		//Test 5 funcional
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+		
 		//abro el navegador
-		driver.get(baseUrl);
+		driver.get(baseUrlPROD);
 		//Localizar el boton por medio de su id.
 		WebElement juagar = (new WebDriverWait(driver, 60))
 		  .until(ExpectedConditions.presenceOfElementLocated(By.id("btn-jugar")));		
@@ -217,9 +222,9 @@ public class TestSeleniumWD extends TestCase {
 	public void testOpenPage6() throws InterruptedException
 	{	
 		//Test 6 de regreción 
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+
 		//abro el navegador
-		driver.get(baseUrl);
+		driver.get(baseUrlPROD);
 		Thread.sleep(2000);
 		//Localizar por medio de su id.
 		isElementPresent("tab-gral");
@@ -230,9 +235,9 @@ public class TestSeleniumWD extends TestCase {
 	public void testOpenPage7() throws InterruptedException
 	{	
 		//Test 7 de regreción
-		String baseUrl = "http://soccerbucketfordummies.s3-website.us-east-2.amazonaws.com/";
+
 		//abro el navegador
-		driver.get(baseUrl);
+		driver.get(baseUrlPROD);
 		Thread.sleep(2000);
 		//Localizar por medio de su id.
 		isElementPresent("btn-siguiente");
