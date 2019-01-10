@@ -13,7 +13,7 @@ import com.cucumber.listener.Reporter;
 @RunWith(Cucumber.class)
 
 @CucumberOptions (features = "src/test/resources/cucumber/selenium",
-		plugin = { "pretty", "html: target/cucumber-reports/report.html" }
+		plugin = { "pretty", "html: target/cucumber-reports" }
 )
 
 public class RunCucumberTest {
