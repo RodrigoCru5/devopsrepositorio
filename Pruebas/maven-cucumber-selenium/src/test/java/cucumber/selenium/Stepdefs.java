@@ -43,6 +43,7 @@ public class Stepdefs {
     public void display_tables_of_contents_and_button_Liguilla() throws Throwable{
         // Write code here that turns the phrase above into concrete actions
         //Busca el elementos
+    	Thread.sleep(3000);
     	driver.findElement(By.id("btn-liguilla"));
     	driver.findElement(By.id("tab-gral"));
     	driver.findElement(By.id("tab-goleo"));
