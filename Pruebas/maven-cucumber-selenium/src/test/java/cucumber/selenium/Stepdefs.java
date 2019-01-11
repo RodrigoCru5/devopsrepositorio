@@ -27,12 +27,12 @@ Scenario: Comenzar la simulacion de los juegos
     @Given("^I open the page$")
     public void i_open_the_page() throws Throwable{
         // Write code here that turns the phrase above into concrete actions
+    	//WebDriverManager.chromedriver().setup();
+    	//driver = new ChromeDriver();
+    	ChromeOptions options = new ChromeOptions();
+    	options.addArguments("headless");//modo oculto
     	WebDriverManager.chromedriver().setup();
-    	driver = new ChromeDriver();
-    	/*ChromeOptions options = new ChromeOptions();
-    	options.addArguments("headless");
-    	WebDriverManager.chromedriver().setup();
-    	driver = new ChromeDriver(options);*/
+    	driver = new ChromeDriver(options);
     	
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         
@@ -210,12 +210,12 @@ Scenario: No debe mostrar tabas de contenido de la simulacion en el inicio de la
     @Given("^I new open the page$")
     public void I_new_open_the_page() throws Throwable{
         // Write code here that turns the phrase above into concrete actions
+    	//WebDriverManager.chromedriver().setup();
+    	//driver = new ChromeDriver();
+    	ChromeOptions options = new ChromeOptions();
+    	options.addArguments("headless"); //modo oculto
     	WebDriverManager.chromedriver().setup();
-    	driver = new ChromeDriver();
-    	/*ChromeOptions options = new ChromeOptions();
-    	options.addArguments("headless");
-    	WebDriverManager.chromedriver().setup();
-    	driver = new ChromeDriver(options);*/
+    	driver = new ChromeDriver(options);
     	
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         
